@@ -13,3 +13,57 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+input[type = submit] {
+  @extend .btn;
+  @extend .btn-success;
+}
+
+input[type = text] {
+  @extend .form-control;
+}
+
+textarea {
+  @extend .form-control
+}
+
+select {
+  @extend .form-control;
+}
+
+.body_panel {
+  @extend .panel;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+label {
+  @extend .col-sm-2;
+  @extend .control-label;
+}
+
+
+.page-header {
+  @extend .page-header;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+
+table {
+  border-collapse: separate;
+  border-spacing: 10px;
+}
+
+.wrapped {
+  word-wrap: break-word;
+  min-width: 160px;
+  max-width: 160px;
+  white-space:normal;
+}
+
+
+
+

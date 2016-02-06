@@ -1,0 +1,12 @@
+div.page-header
+  h1  = controller_name.humanize
+div.body_panel.panel-default
+  div.panel-body
+      table.table-striped
+        tr
+        - @questions.each do |question|
+          tr
+            /. optimize this count in later versions!
+            td.wrapped = pluralize(question.answers.count,'answers')
+            td = link_to question.title, question
+

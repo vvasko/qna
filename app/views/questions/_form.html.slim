@@ -1,0 +1,13 @@
+div.body_panel.panel-default
+  = form_for(@question) do |f|
+    div.field.form-group
+      = f.label :title, class: 'col-md-2 control-label'
+      div.col-sm-3
+        = f.text_field :title
+    div.field.form-group
+      = f.label :content, class: 'col-md-2 control-label'
+      div.col-sm-3
+        = f.text_area :content, class: 'form-comtrol', rows: 5
+    div.actions.form-group
+      div.col-sm-offset-2.col-sm-10
+        = f.submit 'Save'

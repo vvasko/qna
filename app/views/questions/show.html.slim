@@ -1,0 +1,11 @@
+div.page-header
+  h1  =action_name.titleize << ' ' << controller_name.humanize.singularize
+div.body_panel.panel-default
+  div.panel-body
+    h3 = @question.title
+    = @question.content
+
+    = render @question.answers
+    br
+    = render 'answer_form'
+

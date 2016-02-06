@@ -1,0 +1,7 @@
+h3 Your Answer:
+= form_for([@question, @question.answers.new]) do |f|
+  div.field
+    = f.text_area :content, class: 'form-comtrol', size: "25x5"
+  br
+  div.actions
+    = f.submit "Post Your Answer"
