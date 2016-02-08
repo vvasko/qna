@@ -6,16 +6,18 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     if @answer.save
-      redirect_to @question, notice: "Answer is added"
+      flash[:notice] = 'Answer is added'
+      redirect_to @question
     else
-      redirect_to @question, alert: "Can't add answer"
+      flash[:alert] = "Can't add answer"
+      render 'questions/show'
     end
   end
 
   def destroy
     @answer.destroy
     flash[:notice] = "Your answer was deleted successfully"
-    redirect_to question_path(@question)
+    redirect_to @question
   end
 
   private
@@ -29,7 +31,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:content, :question_id)
+    params.require(:answer).permit(:content)
   end
 end
 

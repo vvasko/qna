@@ -21,7 +21,7 @@ RSpec.describe AnswersController, type: :controller do
       end
       it 'redirects to question' do
         post :create, answer: { content: nil }, question_id: question
-        expect(response).to redirect_to question_path(question)
+        expect(response).to render_template :show
       end
     end
   end

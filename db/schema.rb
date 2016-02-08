@@ -19,9 +19,8 @@ ActiveRecord::Schema.define(version: 20160206135928) do
   create_table "answers", force: :cascade do |t|
     t.integer  "question_id"
     t.text     "content"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.integer  "comments_count", default: 0
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
