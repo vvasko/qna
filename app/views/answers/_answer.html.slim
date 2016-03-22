@@ -1,2 +1,5 @@
 div.panel-body
   = answer.content
+  - if user_signed_in? && current_user.is_author?(answer)
+    br
+    = link_to 'Delete', question_answer_path(answer.question_id, answer), method: :delete

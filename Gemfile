@@ -38,6 +38,13 @@ gem 'slim-rails'
 
 gem 'bootstrap-sass'
 
+gem 'devise'
+
+gem 'simple-navigation'
+gem 'simple-navigation-bootstrap'
+gem 'simple_navigation_renderers'
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
@@ -47,6 +54,8 @@ end
 
 group :test do
   gem 'shoulda-matchers', require: false
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :development do
