@@ -32,4 +32,13 @@ feature 'Delete question', %q{
   end
 
 
+  scenario 'Non-authenticated user views the question details page' do
+    visit questions_path
+    click_on question.title
+
+    expect(page).to_not have_content 'Delete'
+
+  end
+
+
 end

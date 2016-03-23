@@ -20,6 +20,10 @@ feature 'Create question', %q{
     click_on 'Save'
 
     expect(page).to have_content 'Question created successfully.'
+    within '.question' do
+      expect(page).to have_content 'Test question'
+      expect(page).to have_content 'text text'
+    end
 
   end
 
