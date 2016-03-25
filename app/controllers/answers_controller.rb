@@ -9,7 +9,6 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     if @answer.save
       flash[:notice] = 'Answer is added'
-      redirect_to @question
     else
       flash[:alert] = "Can't add answer"
       render 'questions/show'
