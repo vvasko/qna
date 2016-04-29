@@ -1,5 +1,11 @@
-div.panel-body
+div.panel-body id="answer_#{answer.id}"
   = answer.content
   - if user_signed_in? && current_user.is_author?(answer)
     br
-    = link_to 'Delete', question_answer_path(answer.question_id, answer), method: :delete
+    = link_to 'Delete', question_answer_path(answer.question_id, answer), method: :delete, remote: true
+    p= link_to 'Edit', '', class: 'edit-answer-link', data: {answer_id: answer.id}
+    p
+      = form_for [@question, answer], remote: true, html: {id: "edit-answer-#{answer.id}"} do |f|
+        = f.label :body, "Answer"
+        = f.text_area :content
+        = f.submit 'Save'

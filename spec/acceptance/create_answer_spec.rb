@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Create answer', %q{
   In order to help anther user
@@ -20,6 +20,16 @@ feature 'Create answer', %q{
     within '.answers' do
       expect(page).to have_content 'Test Answer'
     end
+  end
+
+  scenario 'Authenticated user creates invalid answer', js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    click_on 'Post Your Answer'
+
+    expect(page).to have_content "Content can't be blank"
+
   end
 
   scenario 'Non-authenticated user creates an answer' do

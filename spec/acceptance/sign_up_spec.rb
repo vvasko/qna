@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'User sign up', %q{
   In order to use a system as an authenticated user

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Delete question', %q{
   In order to delete question
@@ -10,35 +10,37 @@ feature 'Delete question', %q{
   given!(:question) { create(:question, user: user) }
   given(:foreign_question) { create(:question) }
 
-  scenario 'Authenticated user deletes his question' do
-    sign_in(user)
 
-    visit questions_path
-    click_on question.title
-
-    within '.question' do
-      click_on 'Delete'
+  describe 'Authenticated user' do
+    before do
+      sign_in(user)
     end
 
-    expect(current_path).to eq questions_path
-    expect(page).to_not have_content question.title
+    scenario 'deletes his question' do
+      visit questions_path
+      click_on question.title
+
+      within '.question' do
+        click_on 'Delete'
+      end
+
+      expect(current_path).to eq questions_path
+      expect(page).to_not have_content question.title
+    end
+
+    scenario 'deletes foreign question' do
+      visit question_path(foreign_question)
+      expect(page).to_not have_content 'Delete'
+    end
   end
 
-  scenario 'Authenticated user deletes foreign question' do
-    sign_in(user)
-    visit question_path(foreign_question)
+  describe 'Non-authenticated user' do
+    scenario 'does not see the Delete link' do
+      visit questions_path
+      click_on question.title
 
-    expect(page).to_not have_content 'Delete'
+      expect(page).to_not have_content 'Delete'
+    end
   end
-
-
-  scenario 'Non-authenticated user views the question details page' do
-    visit questions_path
-    click_on question.title
-
-    expect(page).to_not have_content 'Delete'
-
-  end
-
 
 end

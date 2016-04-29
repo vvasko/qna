@@ -1,2 +1,9 @@
-$('.answers').append('<%= j render @answer %>');
-$('#answer_content').val('');
+<% if @answer.errors.present? %>
+  <% @answer.errors.full_messages.each do |message| %>
+    $('.answer_errors').append('<%= j message %><br>')
+  <%end%>
+<% else %>
+  $('.answers').append('<%= j render @answer %>');
+  $('#answer_content').val('');
+<% end %>
+

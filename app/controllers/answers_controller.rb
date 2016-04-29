@@ -1,24 +1,23 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:create, :destroy]
-  before_action :load_answer, only:[:destroy]
-  before_action :check_author, only: [:destroy]
+  before_action :load_answer, only:[:update,:destroy]
+  before_action :check_author, only: [:update, :destroy]
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params.merge!(user: current_user))
     @answer.user = current_user
-    if @answer.save
-      flash[:notice] = 'Answer is added'
-    else
-      flash[:alert] = "Can't add answer"
-      render 'questions/show'
-    end
+  end
+
+  def update
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def destroy
     @answer.destroy
-    flash[:notice] = "Your answer was deleted successfully"
-    redirect_to @answer.question
+    # flash[:notice] = "Your answer was deleted successfully"
+    # redirect_to @answer.question
   end
 
   private

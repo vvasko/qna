@@ -1,4 +1,5 @@
 h3 Your Answer:
+.answer_errors
 = form_for([@question, @question.answers.new], remote: true ) do |f|
   div.field
     = f.text_area :content, class: 'form-comtrol', size: "25x5"
