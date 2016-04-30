@@ -104,11 +104,70 @@ RSpec.describe AnswersController, type: :controller do
       foreign_answer.reload
       expect(foreign_answer.content).to eq foreign_answer.content
     end
-
-
   end
 
+  describe 'PATCH :set_best' do
+    sign_in_user
+    let!(:user_question) { create(:question, user: @user) }
+    let!(:foreign_question) { create(:question) }
 
+    let(:answer) { create(:answer, question: user_question, user: @user) }
+    let(:another_answer) { create(:answer, question: user_question) }
+    let(:foreign_question_answer) { create(:answer, question: foreign_question) }
+
+
+    context 'Authenticated user' do
+      context 'For own question' do
+        it 'sets the best answer' do
+          patch :set_best, id: answer, question_id: user_question, format: :js
+          answer.reload
+          expect(answer.best?).to be_truthy
+        end
+
+        it 'renders :set_best template' do
+          patch :set_best, id: answer, question_id: user_question, format: :js
+          expect(response).to render_template :set_best
+        end
+      end
+
+      context 'For foreign question' do
+        it 'can not set the best answer' do
+          patch :set_best, id: foreign_question_answer, question_id:foreign_question, format: :js
+          foreign_question_answer.reload
+          expect(foreign_question_answer.best?).to be_falsey
+        end
+      end
+      context 'For selected best answer' do
+        before do
+          another_answer.set_best!
+          patch :set_best, id: answer, question_id: question, format: :js
+        end
+
+        it 'sets answer as best' do
+          answer.reload
+          expect(answer.best?).to be_truthy
+        end
+
+        it 'sets all other answers as not best' do
+          another_answer.reload
+          expect(another_answer.best?).to be_falsey
+        end
+
+        it 'renders :set_best template' do
+          expect(response).to render_template :set_best
+        end
+      end
+    end
+
+    context 'Non-authenticated user' do
+      before { sign_out @user }
+      it 'does not set best answer' do
+        patch :set_best, id: answer, question_id: question, format: :js
+        answer.reload
+        expect(answer.best?).to be_falsey
+      end
+    end
+  end
 
 end
 

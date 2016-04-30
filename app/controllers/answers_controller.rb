@@ -1,8 +1,8 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:create, :destroy]
-  before_action :load_answer, only:[:update,:destroy]
-  before_action :check_author, only: [:update, :destroy]
+  before_action :load_answer, only:[:update,:destroy, :set_best]
+  before_action :check_author, only: [:update, :destroy, :set_best ]
 
   def create
     @answer = @question.answers.create(answer_params.merge!(user: current_user))
@@ -16,8 +16,15 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
-    # flash[:notice] = "Your answer was deleted successfully"
-    # redirect_to @answer.question
+  end
+
+
+  def set_best
+    @question = @answer.question
+    if current_user.is_author?(@question)
+      @answer.set_best!
+    end
+
   end
 
   private
@@ -40,6 +47,7 @@ class AnswersController < ApplicationController
       redirect_to :back
     end
   end
+
 end
 
 

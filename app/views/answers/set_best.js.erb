@@ -1,0 +1,4 @@
+$("[id^='chose_best_']").removeClass('best');
+$('#answer_<%= @answer.id %>').remove();
+$('.answers').prepend("<%= j render partial: @answer %>");
+$("#chose_best_<%= @answer.id %>").addClass('best');
