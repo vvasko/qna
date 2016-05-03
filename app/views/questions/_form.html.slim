@@ -8,6 +8,10 @@ div.body_panel.panel-default
       = f.label :content, class: 'col-md-2 control-label'
       div.col-sm-3
         = f.text_area :content, class: 'form-comtrol', rows: 5
+    div.field.form-group
+      = f.label :attachments, class: 'col-md-2 control-label'
+      div.col-sm-3
+        =render 'nested_attachments_form', f: f
     div.actions.form-group
       div.col-sm-offset-2.col-sm-10
         = f.submit 'Save'

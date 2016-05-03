@@ -61,6 +61,11 @@ GEM
     capybara-webkit (1.10.1)
       capybara (>= 2.3.0, < 2.8.0)
       json
+    carrierwave (0.11.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -148,6 +153,7 @@ GEM
     rake (10.4.2)
     rdoc (4.2.1)
       json (~> 1.4)
+    remotipart (1.2.1)
     responders (2.1.1)
       railties (>= 4.2.0, < 5.1)
     rspec-core (3.4.1)
@@ -240,6 +246,7 @@ DEPENDENCIES
   byebug
   capybara
   capybara-webkit
+  carrierwave
   coffee-rails (~> 4.1.0)
   database_cleaner
   devise
@@ -249,6 +256,7 @@ DEPENDENCIES
   launchy
   pg (~> 0.15)
   rails (= 4.2.5.rc2)
+  remotipart
   rspec-rails
   rubocop
   sass-rails (~> 5.0)

@@ -38,7 +38,7 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:content)
+    params.require(:answer).permit(:content, attachments_attributes: [:file])
   end
 
   def check_author

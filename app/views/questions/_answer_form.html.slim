@@ -1,8 +1,10 @@
 h3 Your Answer:
 .answer_errors
-= form_for([@question, @question.answers.new], remote: true ) do |f|
+= form_for([@question, @answer], multipart: true, remote: true ) do |f|
   div.field
     = f.text_area :content, class: 'form-comtrol', size: "25x5"
+  br
+  =render 'nested_attachments_form', f: f
   br
   div.actions
     = f.submit "Post Your Answer"

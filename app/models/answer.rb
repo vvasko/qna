@@ -1,6 +1,8 @@
 class Answer < ActiveRecord::Base
   belongs_to :user
   belongs_to :question, counter_cache:  true
+  has_many :attachments, as: :attachmentable
+  accepts_nested_attributes_for :attachments
 
   validates :content, :question_id, :user_id,  presence: true
 

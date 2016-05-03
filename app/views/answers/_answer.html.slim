@@ -1,6 +1,7 @@
 - if answer.persisted?
   div.panel-body id="answer_#{answer.id}"
     = answer.content
+    = render 'attachments/attachments', obj: answer
     - if user_signed_in? && current_user.is_author?(@question)
         p= link_to 'Chose as Best', set_best_question_answer_path(answer.question_id,answer.id),
                 class: answer.best? ? 'best' : '', method: :patch, remote: true, id: "chose_best_#{answer.id}"
