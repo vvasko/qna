@@ -160,8 +160,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'User tries to delete foreign question' do
-      let(:question) { create :question, user: user }
-
       it 'does not delete question' do
         question
         expect { delete :destroy, id: question }.to_not change(Question, :count)

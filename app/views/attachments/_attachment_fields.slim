@@ -1,0 +1,10 @@
+.nested-fields
+  - if f.object.new_record?
+    div.field.form-group
+      = f.label :file
+      = f.file_field :file
+  - else
+    div.field.form-group
+      = f.object.file.identifier
+  div.field.form-group
+    = link_to_remove_association "Remove file", f
