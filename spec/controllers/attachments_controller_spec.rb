@@ -28,7 +28,7 @@ RSpec.describe AttachmentsController, type: :controller do
     end
 
     context 'Authenticated user deletes foreign attachment' do
-      it 'does not delete an answer' do
+      it 'does not delete an attachment' do
         expect {delete :destroy, id: attachment, format: :js }.to_not change(Attachment, :count)
       end
 
