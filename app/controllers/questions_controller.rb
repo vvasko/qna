@@ -4,7 +4,15 @@ class QuestionsController < ApplicationController
   before_action :check_author, only: [:update, :destroy]
 
   def index
-    @questions = Question.all
+    if user_signed_in?
+       @questions = Question.includes(:votes)
+         .joins("LEFT OUTER JOIN votes
+            ON votes.votable_id = questions.id
+              AND votes.votable_type = 'Question'
+              AND votes.user_id = #{current_user.id}")
+    else
+      @questions = Question.all
+    end
   end
 
   def show

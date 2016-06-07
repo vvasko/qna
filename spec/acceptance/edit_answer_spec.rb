@@ -45,7 +45,7 @@ feature 'Answer editing', %q{
 
   describe 'Non-authenticated user' do
     scenario 'does not see the Edit link' do
-      visit question_path question
+      visit question_path(question)
       expect(page).to_not have_link 'Edit'
     end
   end

@@ -1,13 +1,27 @@
 Rails.application.routes.draw do
 
   devise_for :users
-  resources :questions do
-    resources :answers, only: [:create, :destroy, :update] do
+
+  concern :votable do
+    resources :votes   do
+      collection do
+        patch :up
+        patch :down
+        patch :reset
+      end
+    end
+  end
+
+  resources :questions,  concerns: :votable do
+    resources :answers, only: [:create, :destroy, :update], concerns: :votable do
       patch :set_best, on: :member
     end
   end
 
   resources :attachments, only: :destroy
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

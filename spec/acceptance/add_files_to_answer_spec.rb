@@ -33,8 +33,6 @@ feature 'Add files to answer', %q{
       all('input[type="file"]')[1].set Rails.root.join('spec', 'rails_helper.rb')
       click_on 'Post Your Answer'
 
-      # save_and_open_page
-
       within '.answers' do
         expect(page).to have_content 'Test Answer with many files'
         expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
