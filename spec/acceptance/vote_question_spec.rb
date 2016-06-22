@@ -34,10 +34,6 @@ feature 'Vote for question', '
         within "#question_#{foreign_question.id}" do
           click_link '+'
 
-          within '.user_vote' do
-            expect(page).to have_content '1'
-          end
-
           within '.rating' do
             expect(page).to have_content '1'
           end
@@ -52,10 +48,6 @@ feature 'Vote for question', '
       scenario 'click - button', js: true do
         within "#question_#{foreign_question.id}" do
           click_link '-'
-
-          within '.user_vote' do
-            expect(page).to have_content '-1'
-          end
 
           within '.rating' do
             expect(page).to have_content '-1'
@@ -88,10 +80,6 @@ feature 'Vote for question', '
         page.find("#vote_reset_for_#{foreign_question.id}").trigger("click")
 
         within "#question_#{foreign_question.id}" do
-          within '.user_vote' do
-            expect(page).to have_content '0'
-          end
-
           within '.rating' do
             expect(page).to have_content '0'
           end
@@ -117,9 +105,6 @@ feature 'Vote for question', '
           page.find("#vote_reset_for_#{foreign_question.id}").trigger("click")
 
           click_link '-'
-          within '.user_vote' do
-            expect(page).to have_content '-1'
-          end
 
           within '.rating' do
             expect(page).to have_content '-1'

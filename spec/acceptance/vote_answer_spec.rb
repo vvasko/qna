@@ -49,10 +49,6 @@ feature 'Vote for answer', '
         within "#answer_#{foreign_answer.id}" do
           click_link '+'
 
-          within '.user_vote' do
-            expect(page).to have_content '1'
-          end
-
           within '.rating' do
             expect(page).to have_content '1'
           end
@@ -67,10 +63,6 @@ feature 'Vote for answer', '
       scenario 'click - button', js: true do
         within "#answer_#{foreign_answer.id}" do
           click_link '-'
-
-          within '.user_vote' do
-            expect(page).to have_content '-1'
-          end
 
           within '.rating' do
             expect(page).to have_content '-1'
@@ -104,9 +96,6 @@ feature 'Vote for answer', '
           page.find("#vote_reset_for_#{foreign_answer.id}").trigger("click")
 
           within "#answer_#{foreign_answer.id}" do
-            within '.user_vote' do
-              expect(page).to have_content '0'
-            end
 
             within '.rating' do
               expect(page).to have_content '0'
@@ -133,9 +122,6 @@ feature 'Vote for answer', '
             page.find("#vote_reset_for_#{foreign_answer.id}").trigger("click")
 
             click_link '-'
-            within '.user_vote' do
-              expect(page).to have_content '-1'
-            end
 
             within '.rating' do
               expect(page).to have_content '-1'

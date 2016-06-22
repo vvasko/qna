@@ -11,18 +11,13 @@ div.body_panel.panel-default
           th = 'Question Title'
           th = 'Rating'
           - if user_signed_in?
-            th = 'My Vote'
             th = 'Voting'
         - @questions.each do |question|
           tr id = "question_#{question.id}"
-            td.wrapped = pluralize(question.answers_count,'answers' ) << "| u_#{question.user_id}"
+            td.wrapped = pluralize(question.answers_count,'answers' )
             td = link_to question.title, question
             td.rating = question.rating
             - if user_signed_in?
-              td.user_vote
-                - question.votes.each do |vote|
-                  - if vote.user_id == current_user.id
-                    = vote.value
               td
                 = render 'votes/voting', votable: question
 

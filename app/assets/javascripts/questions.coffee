@@ -15,7 +15,6 @@ $ ->
     response = $.parseJSON(xhr.responseText)
 
     $('#question_' + question_id + ' .rating').html(response.rating)
-    $('#question_' + question_id + ' .user_vote').html(response.user_vote)
 
     if response.user_vote != 0
       $('#vote_up_for_' + question_id).addClass('disabled')

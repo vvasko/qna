@@ -1,41 +1,23 @@
 - if user_signed_in?
   - votable_type = votable.class.name.to_s.downcase
-  - if votable.user_id == current_user.id
+  - if current_user.is_author?(votable)
     - vote_buttons_class = 'disabled'
     - reset_button_class = 'disabled'
   - else
     - vote_buttons_class = ''
     - reset_button_class = 'disabled'
     - votable.votes.each do |vote|
-      - if vote.user_id == current_user.id
+      - if current_user.is_author?(vote)
         - vote_buttons_class = 'disabled'
         - reset_button_class = ''
 
 
   div.vote_buttons id = "vote_for_#{votable.id}"
-    /= link_to "+", ["up_#{votable_type}", @votable, :votes, "#{votable_type}_id": votable.id, type: votable_type],
-    /  method: :patch, remote: true, data: {type: :json},
-    /  class: "btn btn-default #{vote_buttons_class}", id: "vote_up_for_#{votable.id}"
-    /
-    /= link_to "-", ["down_#{votable_type}", @votable, :votes, "#{votable_type}_id": votable.id, type: votable_type],
-    /  method: :patch, remote: true, data: {type: :json},
-    /  class: "btn btn-default #{vote_buttons_class}", id: "vote_down_for_#{votable.id}"
-    /
-    /= link_to "Reset", ["reset_#{votable_type}", @votable, :votes, "#{votable_type}_id": votable.id, type: votable_type],
-    /  method: :patch, remote: true, data: {type: :json},
-    /  class: "btn btn-default #{reset_button_class}", id: "vote_reset_for_#{votable.id}"
+    = link_to "+", polymorphic_path([:up, votable.try(:question), votable, :votes], type: votable_type), method: :patch, remote: true,
+      data: {type: :json}, class: "btn btn-default #{vote_buttons_class}", id: "vote_up_for_#{votable.id}"
 
-    -if 'question' == votable_type
-      = link_to "+", up_question_votes_path(votable.id, type: votable_type), method: :patch, remote: true,
-          data: {type: :json}, class: "btn btn-default #{vote_buttons_class}", id: "vote_up_for_#{votable.id}"
-      = link_to "-", down_question_votes_path(votable.id, type: votable_type), method: :patch, remote: true,
-          data: {type: :json}, class: "btn btn-default #{vote_buttons_class}", id: "vote_down_for_#{votable.id}"
-      = link_to "Reset", reset_question_votes_path(votable.id, type: votable_type), method: :patch, remote: true,
+    = link_to "-", polymorphic_path([:down, votable.try(:question), votable, :votes], type: votable_type), method: :patch, remote: true,
+        data: {type: :json}, class: "btn btn-default #{vote_buttons_class}", id: "vote_down_for_#{votable.id}"
+
+    = link_to "Reset", polymorphic_path([:reset, votable.try(:question), votable, :votes], type: votable_type), method: :patch, remote: true,
           data: {type: :json}, class: "btn btn-default #{reset_button_class}", id: "vote_reset_for_#{votable.id}"
-    -if 'answer'== votable_type
-      = link_to "+", up_question_answer_votes_path(votable.question.id ,votable.id, type: votable_type), method: :patch, remote: true,
-                data: {type: :json}, class: "btn btn-default #{vote_buttons_class}", id: "vote_up_for_#{votable.id}"
-      = link_to "-", down_question_answer_votes_path(votable.question.id, votable.id, type: votable_type), method: :patch, remote: true,
-              data: {type: :json}, class: "btn btn-default #{vote_buttons_class}", id: "vote_down_for_#{votable.id}"
-      = link_to "Reset", reset_question_answer_votes_path(votable.question.id, votable.id, type: votable_type), method: :patch, remote: true,
-              data: {type: :json}, class: "btn btn-default #{reset_button_class}", id: "vote_reset_for_#{votable.id}"
