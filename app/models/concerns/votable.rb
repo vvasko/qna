@@ -5,13 +5,10 @@ module Votable
      has_many :votes, as: :votable, dependent: :destroy
    end
 
-  def votable_type
-    self.class.name
-  end
 
   def vote!(user, value)
     if can_vote(user) && !voted_by(user)
-      @vote = Vote.new({user: user, votable_id: self.id, votable_type: votable_type,value: value})
+      @vote = Vote.new({user: user,votable:self,value: value})
       @vote.save
       @vote
     end
@@ -22,6 +19,10 @@ module Votable
       Vote.where(votable: self, user_id: user.id).delete_all
     end
 
+  end
+
+  def votable_type
+    self.class.name
   end
 
   def can_vote(user, add_errors = true)
