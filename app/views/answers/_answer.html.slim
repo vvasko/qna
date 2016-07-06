@@ -2,12 +2,17 @@
   div.errors
   div.panel-body id="answer_#{answer.id}"
     = answer.content
+
+    div.comments id = "answer_#{answer.id}_comments_block"
+    = render 'comments/comments_list', commentable: answer
+    = render 'comments/form', comment: answer.comments.new, commentable: answer
+
     p= render 'votes/voting', votable: answer
     p Rating:
     div.rating
     =answer.rating
 
-    = render 'attachments/attachments', obj: answer
+    = render 'attachments/attachments', attachable: answer
     - if user_signed_in? && current_user.is_author?(@question)
       p= link_to 'Chose as Best', set_best_question_answer_path(answer.question_id,answer.id),
         class: answer.best? ? 'best' : '', method: :patch, remote: true, id: "chose_best_#{answer.id}"
@@ -19,3 +24,6 @@
             = f.label :body, "Answer"
             = f.text_area :content
             = f.submit 'Save'
+
+
+  = subscribe_to "/answer/#{answer.id}/comments"

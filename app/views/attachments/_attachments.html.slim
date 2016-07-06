@@ -1,0 +1,6 @@
+- if attachable.attachments.present?
+  div.panel.panel-default
+    div.panel-heading Attachments
+    div.panel-body id="#{attachable.class.name.downcase}_#{attachable.id}_attachments"
+      ul.attachment_list
+        = render attachable.attachments

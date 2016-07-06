@@ -28,11 +28,11 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       it 'does not save the answer' do
-        expect { post :create, answer: { content: nil }, question_id: question, format: :js }.to_not change(Answer, :count)
+        expect { post :create, answer: {content: nil }, question_id: question, format: :js }.to_not change(Answer, :count)
       end
 
       it 'render create template' do
-        post :create, answer: { content: nil }, question_id: question,  format: :js
+        post :create, answer: {content: nil }, question_id: question, format: :js
         expect(response).to render_template :create
       end
     end

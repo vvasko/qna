@@ -1,0 +1,30 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+  $('.comment_errors').append('<%= j message %><br>')
+<%end%>
+<% else %>
+  <% publish_to "/#{@comment.commentable_type.downcase}/#{@comment.commentable_id}/comments" do  %>
+
+    if (0 == $('#<%= "#{@comment.commentable_type.downcase}_#{@comment.commentable.id}_comments" %>').length){
+        $('#<%= "#{@comment.commentable_type.downcase}_#{@comment.commentable.id}_comments_block" %>')
+            .append('<%= j render 'comments/comments_block', commentable: @comment.commentable %>');
+    }
+
+    $('#<%= "#{@comment.commentable_type.downcase}_#{@comment.commentable.id}_comments" %>')
+        .append('<%= j render @comment %>');
+
+  <% end %>
+
+  $('.new_comment #comment_content').val('');
+  $('.new_comment').hide();
+  $('.add-comment').show();
+
+  $('.add-comment').click(function(e) {
+    e.preventDefault();
+    $(this).hide()
+    form_id=$(this).data('formId')
+    $('form#'+form_id).show();
+
+  });
+
+<% end %>

@@ -1,0 +1,5 @@
+- if commentable.comments.present?
+  div.panel.panel-default
+    div.panel-heading Comments
+    div.panel-body id="#{commentable.class.name.downcase}_#{commentable.id}_comments"
+      = render commentable.comments

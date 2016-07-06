@@ -1,0 +1,16 @@
+div.container id="comment_#{comment.id}"
+  div.row
+    div.col-sm-1
+      div.thumbnail
+        img.img-responsive.user-photo =image_tag('avatar_2x.png')
+    div.col-sm-5
+      div.panel.panel-default
+        div.panel.panel-heading
+          strong =comment.user.email
+          div.info
+            span.text-muted.ago =time_ago_in_words(comment.created_at)
+        div.panel-body
+          = comment.content
+          div.info
+            - if user_signed_in? && current_user.is_author?(comment)
+              = link_to '', comment_path(comment), remote: true, method: :delete, class: 'glyphicon glyphicon-trash'

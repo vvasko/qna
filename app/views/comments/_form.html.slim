@@ -1,0 +1,12 @@
+-if user_signed_in?
+  = button_to 'Add Comment', '', class: 'add-comment button',  title: "Add Comment",
+          data: {form_id: "#{comment.commentable_type.downcase}_#{comment.commentable_id}_comment_form"}
+  = form_for [commentable, comment],  url: polymorphic_path([commentable.try(:question),commentable, comment]),
+          html: {id: "#{comment.commentable_type.downcase}_#{comment.commentable_id}_comment_form"} ,remote: true do |f|
+    h3 Your Comment:
+    .comment_errors
+    div.field
+      = f.text_area :content, type: "text", placeholder: "Your comment", class: 'form-comtrol', size: "25x5"
+    br
+    div.actions
+      = button_to "Post Comment", type: 'submit', class: ".btn-success", title: "Post Comment"

@@ -1,0 +1,4 @@
+li id="attachment_#{attachment.id}"
+  = link_to attachment.file.identifier, attachment.file.url
+  - if user_signed_in? && current_user.is_author?(attachment.attachable)
+    p= link_to 'Delete', attachment_path(attachment), method: :delete, remote: true

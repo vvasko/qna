@@ -13,12 +13,6 @@ div.body_panel.panel-default
           - if user_signed_in?
             th = 'Voting'
         - @questions.each do |question|
-          tr id = "question_#{question.id}"
-            td.wrapped = pluralize(question.answers_count,'answers' )
-            td = link_to question.title, question
-            td.rating = question.rating
-            - if user_signed_in?
-              td
-                = render 'votes/voting', votable: question
+          = render 'question_row', question: question
 
-
+= subscribe_to '/questions'

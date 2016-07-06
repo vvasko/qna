@@ -3,8 +3,15 @@ div.page-header
 div.body_panel.panel-default
   div.panel-body
     = render @question
+    br
+    div.comments id = "question_#{@question.id}_comments_block"
+    = render 'comments/comments_list', commentable: @question
+    = render 'comments/form', comment: @question.comments.new, commentable: @question
+
     div.answers
       = render @question.answers
     br
     = render 'questions/answer_form'
 
+= subscribe_to "/question/#{@question.id}/answers"
+= subscribe_to "/question/#{@question.id}/comments"

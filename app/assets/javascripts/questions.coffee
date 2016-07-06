@@ -2,10 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
+  PrivatePub.subscribe "/questions",(data, channel) ->
+    question = $.parseJSON(data['question'])
+    userSignedIn=parseInt($('#current_user').val())>0
+    $('.questions_list').append(JST["question"]({question: question, user_signed_in: userSignedIn}));
+
   $('.edit-question-link').click (e) ->
     e.preventDefault();
     question_id = $(this).data('questionId')
-    console.log($('form#edit-question-' + question_id))
     $('form#edit-question-' + question_id).show()
 
   $('.vote_buttons').bind 'ajax:success', (e, data, status, xhr)->
@@ -29,3 +33,4 @@ $ ->
     errors = $.parseJSON(xhr.responseText)
     $.each errors, (index, value) ->
       $('.errors').html(value)
+

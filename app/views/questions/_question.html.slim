@@ -1,7 +1,7 @@
 div.question id="question_#{@question.id}"
   h3 = @question.title
   = @question.content
-  = render 'attachments/attachments', obj: @question
+  = render 'attachments/attachments', attachable: @question
   - if user_signed_in? && current_user.is_author?(@question)
     br
     = link_to 'Delete', @question, method: :delete

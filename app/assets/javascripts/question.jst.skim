@@ -1,0 +1,14 @@
+tr id = "question_#{@question.id}"
+  td.wrapped = "#{parseInt(@question.answers_count)} answers"
+  td
+    a href="/questions/#{@question.id}" #{@question.title}
+  td.rating = "#{parseInt(@question.rating) || 0}"
+
+  -if @user_signed_in
+    td
+      div.vote_buttons id="vote_for_#{@question.id}"
+        a id="vote_up_for_#{@question.id}" class="btn btn-default" data-remote="true" rel="nofollow" data-method="patch"  data-type="json" href="/questions/#{@question.id}/votes/up?type=question" +
+        a id="vote_down_for_#{@question.id}" class="btn btn-default" data-remote="true" rel="nofollow" data-method="patch"  data-type="json" href="/questions/#{@question.id}/votes/down?type=question" -
+        a id="vote_reset_for_#{@question.id}" class="btn btn-default disabled" data-remote="true" rel="nofollow" data-method="patch"  data-type="json" href="/questions/#{@question.id}/votes/reset?type=question" Reset
+
+

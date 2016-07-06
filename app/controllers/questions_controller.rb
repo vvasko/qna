@@ -28,8 +28,11 @@ class QuestionsController < ApplicationController
     @question = Question.new(question_params)
     @question.user = current_user
 
+    @question.save
+
     if @question.save
       flash[:notice] = 'Question created successfully.'
+      PrivatePub.publish_to '/questions', question: @question.to_json
       redirect_to @question
     else
       render :new

@@ -1,3 +1,5 @@
 <nav class="navbar navbar-default">
 <%= render_navigation(:expand_all => true, :renderer => :bootstrap)  %>
-  </nav>
+</nav>
+
+<input type="hidden" id="current_user" value="<%= user_signed_in? ? current_user.id : 0 %>">

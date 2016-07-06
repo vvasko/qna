@@ -1,7 +1,0 @@
-p Attachments:
-ul.attachment_list
-  - obj.attachments.each do |a|
-    li id="attachment_#{a.id}"
-      = link_to a.file.identifier, a.file.url
-      - if user_signed_in? && current_user.is_author?(obj)
-        p= link_to 'Delete', attachment_path(a), method: :delete, remote: true
