@@ -3,8 +3,7 @@
   $('.comment_errors').append('<%= j message %><br>')
 <%end%>
 <% else %>
-  <% publish_to "/#{@comment.commentable_type.downcase}/#{@comment.commentable_id}/comments" do  %>
-
+  <% publish_to "/comments" do  %>
     if (0 == $('#<%= "#{@comment.commentable_type.downcase}_#{@comment.commentable.id}_comments" %>').length){
         $('#<%= "#{@comment.commentable_type.downcase}_#{@comment.commentable.id}_comments_block" %>')
             .append('<%= j render 'comments/comments_block', commentable: @comment.commentable %>');
@@ -26,5 +25,4 @@
     $('form#'+form_id).show();
 
   });
-
 <% end %>
