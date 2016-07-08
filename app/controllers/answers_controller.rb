@@ -4,27 +4,23 @@ class AnswersController < ApplicationController
   before_action :load_answer, only:[:update,:destroy, :set_best]
   before_action :check_author, only: [:update, :destroy, :set_best ]
 
+  respond_to :js
+
   def create
-    @answer = @question.answers.create(answer_params.merge!(user: current_user))
-    @answer.user = current_user
+    respond_with (@answer = @question.answers.create(answer_params.merge!(user: current_user)))
   end
 
   def update
     @answer.update(answer_params)
-    @question = @answer.question
+    respond_with @answer
   end
 
   def destroy
-    @answer.destroy
+    respond_with(@answer.destroy)
   end
 
-
   def set_best
-    @question = @answer.question
-    if current_user.is_author?(@question)
-      @answer.set_best!
-    end
-
+    @answer.set_best! if current_user.is_author?(@question)
   end
 
   private
@@ -35,6 +31,7 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find(params[:id])
+    @question = @answer.question
   end
 
   def answer_params

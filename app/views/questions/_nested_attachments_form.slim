@@ -1,5 +1,5 @@
 .nested-fields.well
   div.field.form-group
-    =f.fields_for :attachments do |a|
+    =f.fields_for :attachments, attachable.attachments.build do |a|
       = render 'attachments/attachment_fields', f: a
     .links= link_to_add_association 'Add another file', f, :attachments, partial: 'attachments/attachment_fields'

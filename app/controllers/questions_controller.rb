@@ -2,41 +2,26 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
   before_action :check_author, only: [:update, :destroy]
+  before_action :build_answer, only: :show
+  after_action :publish_question, only: :create
 
   def index
-    if user_signed_in?
-      @questions = Question.includes(:votes)
-    else
-      @questions = Question.all
-    end
+     respond_with(@questions = (user_signed_in? ? Question.includes(:votes) : Question.all))
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with (@question = Question.new)
   end
 
   def edit
   end
 
   def create
-    @question = Question.new(question_params)
-    @question.user = current_user
-
-    @question.save
-
-    if @question.save
-      flash[:notice] = 'Question created successfully.'
-      PrivatePub.publish_to '/questions', question: @question.to_json
-      redirect_to @question
-    else
-      render :new
-    end
+    respond_with(@question = Question.create(question_params.merge(user: current_user)))
   end
 
   def update
@@ -44,8 +29,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    respond_with(@question.destroy)
   end
 
   private
@@ -63,6 +47,14 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'Permission denied.'
       redirect_to :back
     end
+  end
+
+  def publish_question
+    PrivatePub.publish_to '/questions', question: @question.to_json if @question.valid?
+  end
+
+  def build_answer
+    @answer = @question.answers.build
   end
 
 end

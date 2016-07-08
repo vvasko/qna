@@ -10,15 +10,16 @@ module Votable
     if can_vote(user) && !voted_by(user)
       @vote = Vote.new({user: user,votable:self,value: value})
       @vote.save
-      @vote
     end
+    update_rating
+    @vote
   end
 
   def unvote(user)
     if can_vote(user) && voted_by(user, false)
       Vote.where(votable: self, user_id: user.id).delete_all
     end
-
+    update_rating
   end
 
   def votable_type
@@ -45,7 +46,7 @@ module Votable
   end
 
   def total_rating
-    votes.sum(:value)
+     votes.sum(:value)
   end
 
   def update_rating

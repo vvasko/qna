@@ -30,7 +30,7 @@ $ ->
       $('#vote_reset_for_' + question_id).addClass('disabled')
 
   .bind 'ajax:error', (e, xhr, status, error)->
-    errors = $.parseJSON(xhr.responseText)
-    $.each errors, (index, value) ->
+    response = $.parseJSON(xhr.responseText)
+    $.each response.errors, (index, value) ->
       $('.errors').html(value)
 

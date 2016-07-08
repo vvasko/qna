@@ -7,20 +7,16 @@ class VotesController < ApplicationController
 
     def up
       @vote = @votable.vote!(current_user, Vote::TYPE[:up])
-      @votable.update_rating
-
       json_response
     end
 
     def down
       @vote = @votable.vote!(current_user, Vote::TYPE[:down])
-      @votable.update_rating
       json_response
     end
 
     def reset
       @votable.unvote(current_user)
-      @votable.update_rating
       json_response
     end
 
@@ -35,13 +31,12 @@ class VotesController < ApplicationController
 
     def json_response
       if @votable.errors.present?
-        render json: @votable.errors.full_messages, status: :forbidden
+        respond_with(@votable)
       else
         render json: {
           user_vote: @vote.present? ? @vote.value : 0,
           rating: @votable.rating,
         }
       end
-
     end
 end

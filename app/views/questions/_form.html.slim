@@ -11,7 +11,7 @@ div.body_panel.panel-default
     div.field.form-group
       = f.label :attachments, class: 'col-md-2 control-label'
       div.col-sm-3
-        =render 'nested_attachments_form', f: f
+        =render 'nested_attachments_form', f: f, attachable: @question
     div.actions.form-group
       div.col-sm-offset-2.col-sm-10
         = f.submit 'Save'

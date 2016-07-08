@@ -32,10 +32,8 @@ feature 'Create answer', %q{
 
   end
 
-  scenario 'Non-authenticated user creates an answer' do
-    visit questions_path(question)
-    expect(page).to_not have_content 'Your Answer'
-    expect(page).to_not have_content 'Post Your Answer'
-
+  scenario 'Non-authenticated user creates an answer', js: true do
+    visit question_path(question)
+    expect(page).to_not have_link 'Post Your Answer'
   end
 end

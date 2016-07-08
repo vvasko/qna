@@ -5,9 +5,10 @@ class AttachmentsController < ApplicationController
   before_action :load_attachable, only: [:destroy]
   before_action :check_author, only: [:destroy]
 
+  respond_to :js
+
   def destroy
-    @attachment.destroy
-    flash[:success] = 'Attachment removed successfully.'
+    respond_with(@attachment.destroy)
   end
 
   private
